@@ -1,0 +1,85 @@
+/* ============================================================================
+   99WORLDCUP — BASE
+   Mobile first. Every size below is the PHONE size; media queries add width,
+   they never take it away. Nothing in this file assumes a mouse.
+   ========================================================================== */
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--void);
+  color:var(--ink);
+  font-family:var(--fx-body);
+  font-size:22px;            /* VT323 runs narrow; 22px reads like ~16px */
+  line-height:1.45;
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+  /* Browser gestures (back-swipe, pull-to-refresh, pinch zoom) stay on.
+     Only the game canvas opts out, and only while it is on screen. */
+  touch-action:manipulation;
+}
+@media (min-width:900px){ body{font-size:20px} }
+
+img,canvas{max-width:100%}
+
+/* CRT room: a vignette + fine scanlines over the whole document.
+   Not decoration — it is the product's premise (you are inside a cabinet).
+   One fixed layer, no animation: costs a single composited paint. */
+#crt{
+  position:fixed;inset:0;pointer-events:none;z-index:900;
+  background:
+    repeating-linear-gradient(to bottom,rgba(0,0,0,.20) 0 1px,transparent 1px 3px),
+    radial-gradient(130% 95% at 50% 40%,transparent 42%,rgba(0,0,0,.72) 100%);
+  mix-blend-mode:multiply;
+}
+/* On small screens the scanline pitch would sit under a 3× device pixel
+   ratio and shimmer while scrolling. Widen it and drop the multiply. */
+@media (max-width:599px){
+  #crt{background:radial-gradient(150% 100% at 50% 35%,transparent 46%,rgba(0,0,0,.66) 100%)}
+}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-family:var(--fx-display);font-weight:400;margin:0;line-height:1.4;letter-spacing:.02em}
+h1{font-size:20px}
+h2{font-size:15px}
+h3{font-size:12px}
+h4{font-size:10px}
+@media (min-width:600px){
+  h1{font-size:26px} h2{font-size:17px} h3{font-size:13px} h4{font-size:10px}
+}
+@media (min-width:900px){ h1{font-size:30px} h2{font-size:19px} }
+
+p{margin:0 0 .75em}
+a{color:var(--tube);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.mono{font-family:var(--fx-display)}
+/* .tiny is the arcade instruction-panel voice. It was the main offender on
+   phones, so it is now 10px there and only tightens on large screens. */
+.tiny{font-family:var(--fx-display);font-size:10px;line-height:1.8;letter-spacing:.05em}
+@media (min-width:900px){ .tiny{font-size:9px;line-height:1.7;letter-spacing:.06em} }
+.micro{font-family:var(--fx-display);font-size:9px;line-height:1.7;letter-spacing:.08em}
+
+.muted{color:var(--ghost)}
+.coin{color:var(--coin)}
+.alarm{color:var(--alarm)}
+.tube{color:var(--tube)}
+.mint{color:var(--mint)}
+.marker{font-family:var(--fx-marker);color:var(--neon);line-height:1.2}
+.num{font-family:var(--fx-display);font-variant-numeric:tabular-nums}
+.lead{font-size:20px}
+@media (min-width:600px){ .lead{font-size:22px} }
+
+/* ---------- focus: always visible, never subtle ---------- */
+:focus-visible{outline:3px solid var(--coin);outline-offset:2px}
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:999;background:var(--coin);color:#000;
+  padding:12px 16px;font-family:var(--fx-display);font-size:11px;
+}
+.skip:focus{left:8px;top:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+}
