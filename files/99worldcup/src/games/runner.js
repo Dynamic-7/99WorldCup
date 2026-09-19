@@ -57,7 +57,12 @@ export function Runner(o){
     const ar = game.w / game.h;
     const rect = o.cabinet.getBoundingClientRect();
     const others = o.cabinet.offsetHeight - o.screen.offsetHeight;   // chrome height
-    const avail = window.innerHeight - rect.top - others - 84;       // 84: under-cab row
+    /* On a phone the glass is the show: only the machine above the screen is
+       reserved, so the canvas runs wide instead of shrinking to a stamp. The
+       deck sits below the fold — every game is touch-playable on the glass
+       itself (tap / swipe / drag), so nothing is lost mid-run. */
+    const reserve = window.matchMedia('(max-width:599px)').matches ? 106 : others + 84;
+    const avail = window.innerHeight - rect.top - reserve;
     const byHeight = Math.max(170, avail) * ar;
     o.screen.style.maxWidth = Math.floor(byHeight) + 'px';
   }

@@ -180,3 +180,13 @@
 .instructions ol{margin:0;padding-left:22px;font-size:20px;color:var(--ink)}
 .instructions li{margin-bottom:5px}
 @media (min-width:900px){ .instructions ol{font-size:18px} }
+
+/* ---------- phone: the glass takes the stage ----------
+   On a handset the machine is mostly screen. The surround tightens so the
+   canvas keeps nearly the full phone width; fitScreen() (runner.js) owns the
+   height side. Desktop and the rest of the site are untouched. */
+@media (max-width:599px){
+  .cab-stage{padding-left:4px;padding-right:4px}
+  .cabinet__bezel{padding:6px}
+  .screen{border-width:2px}
+}
