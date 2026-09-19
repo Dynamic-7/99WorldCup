@@ -1,0 +1,128 @@
+/* ============================================================================
+   99WORLDCUP — LAYOUT
+   Shell, the cabinet-panel box, the top marquee and the cabinet base (footer).
+   ========================================================================== */
+
+.shell{width:100%;max-width:var(--shell-max);margin:0 auto;padding:0 14px}
+@media (min-width:600px){ .shell{padding:0 20px} }
+@media (min-width:900px){ .shell{padding:0 24px} }
+
+main{min-height:60vh;padding-bottom:44px}
+@media (min-width:600px){ main{padding-bottom:56px} }
+
+.stack{display:flex;flex-direction:column;gap:var(--gap)}
+.row{display:flex;gap:var(--gap);flex-wrap:wrap}
+.spread{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.pagehead{text-align:center;padding-top:var(--gap)}
+.pagehead p{margin-top:10px}
+
+/* ---------- panel: the cabinet side-art box with corner bolts ---------- */
+.panel{
+  position:relative;background:var(--cabinet);
+  border:var(--rule) solid var(--rail);
+  padding:var(--pad);
+}
+.panel::before,.panel::after{
+  content:"";position:absolute;width:5px;height:5px;background:var(--dim);
+  box-shadow:0 0 0 1px rgba(0,0,0,.6);
+}
+.panel::before{top:5px;left:5px;box-shadow:calc(100% + 6px) 0 0 0 var(--dim),0 0 0 1px rgba(0,0,0,.6)}
+.panel::after{bottom:5px;left:5px;box-shadow:calc(100% + 6px) 0 0 0 var(--dim),0 0 0 1px rgba(0,0,0,.6)}
+.panel--coin{border-color:var(--coin-dk)}
+.panel--alarm{border-color:var(--alarm-dk)}
+.panel--flat{background:var(--floor)}
+.panel--flat::before,.panel--flat::after{display:none}
+
+/* the stencilled label riveted to the top of an arcade instruction panel */
+.legend{
+  display:inline-block;font-family:var(--fx-display);font-size:10px;letter-spacing:.1em;
+  color:var(--coin);background:var(--void);padding:4px 9px;
+  border:1px solid var(--coin-dk);margin-bottom:14px;
+  align-self:flex-start;      /* never stretch inside a flex column */
+}
+@media (min-width:900px){ .legend{font-size:9px} }
+
+hr.rule{border:0;border-top:1px solid var(--dim);margin:0}
+.notice{border:var(--rule) dashed var(--dim);padding:14px 16px;color:var(--ghost);font-size:20px}
+.notice strong{color:var(--coin);font-weight:400}
+@media (min-width:900px){ .notice{font-size:18px} }
+
+/* ---------- top marquee (nav) ----------
+   A lit marquee above the cabinet: brass wordmark, red tube underneath. */
+.marquee{
+  position:sticky;top:0;z-index:600;background:var(--floor);
+  border-bottom:var(--rule) solid var(--alarm);
+  box-shadow:0 2px 0 rgba(255,46,63,.18);
+}
+.marquee__in{display:flex;align-items:center;gap:12px;height:var(--nav-h)}
+.wordmark{
+  font-family:var(--fx-display);font-size:15px;color:var(--coin);
+  letter-spacing:-.02em;white-space:nowrap;
+  text-shadow:0 2px 0 var(--coin-dk);
+}
+.wordmark:hover{text-decoration:none;color:#FFE07A}
+@media (min-width:600px){ .wordmark{font-size:14px} }
+
+.navlinks{display:flex;gap:4px;margin-left:auto;align-items:center}
+.navlinks a{
+  font-family:var(--fx-display);font-size:9px;letter-spacing:.06em;
+  color:var(--ghost);padding:10px 9px;border-bottom:2px solid transparent;
+}
+.navlinks a:hover{color:var(--ink);text-decoration:none}
+.navlinks a[aria-current="page"]{color:var(--coin);border-bottom-color:var(--coin)}
+.navid{display:flex;align-items:center;gap:7px;margin-left:10px;padding-left:12px;border-left:1px solid var(--dim)}
+.avatar{
+  width:28px;height:28px;border:1px solid var(--dim);background:var(--cab-2);
+  display:grid;place-items:center;font-size:16px;line-height:1;
+}
+.burger{margin-left:auto}
+
+/* Phone / small tablet: the links become a drop-down panel with real targets. */
+@media (max-width:899px){
+  .navlinks{
+    position:absolute;top:var(--nav-h);left:0;right:0;background:var(--floor);
+    border-bottom:var(--rule) solid var(--alarm);flex-direction:column;align-items:stretch;
+    padding:6px 14px 14px;gap:0;margin-left:0;
+    box-shadow:0 14px 26px rgba(0,0,0,.6);
+  }
+  .navlinks[hidden]{display:none}
+  .navlinks a{
+    padding:15px 8px;font-size:12px;border-bottom:1px solid var(--dim);
+    min-height:48px;display:flex;align-items:center;
+  }
+  .navid{margin:12px 0 0;border:0;padding:0;font-size:11px}
+}
+/* .btn sets display:inline-flex in a later stylesheet, so this needs the
+   extra specificity to win rather than relying on source order. */
+@media (min-width:900px){ .marquee .burger{display:none} }
+
+/* ---------- footer: the cabinet base ---------- */
+footer{
+  border-top:var(--rule) solid var(--coin-dk);
+  background:
+    repeating-linear-gradient(90deg,rgba(255,255,255,.015) 0 2px,transparent 2px 6px),
+    linear-gradient(#0A0E1F,#05070F);
+  padding:24px 0 28px;margin-top:20px;
+}
+.foot{display:grid;grid-template-columns:1fr;gap:24px;align-items:start}
+@media (min-width:600px){ .foot{grid-template-columns:1fr 1fr} }
+@media (min-width:900px){ .foot{grid-template-columns:1.2fr 1.6fr .9fr;gap:26px} }
+
+.footlinks{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px}
+.footlinks a{
+  font-family:var(--fx-display);font-size:11px;color:var(--ghost);
+  padding:10px 0;letter-spacing:.06em;min-height:44px;display:flex;align-items:center;
+}
+.footlinks a:hover{color:var(--coin);text-decoration:none}
+@media (min-width:900px){ .footlinks a{font-size:9px;padding:6px 0;min-height:0} }
+
+/* the brass plate screwed to the coin door */
+.plate{
+  border:3px solid #6B5518;background:linear-gradient(160deg,#4A3A10,#241B06);
+  padding:14px 16px;text-align:center;font-family:var(--fx-display);font-size:11px;
+  color:var(--coin);letter-spacing:.08em;line-height:1.7;position:relative;
+}
+@media (min-width:900px){ .plate{font-size:10px} }
+.plate span{display:block;width:6px;height:6px;background:#8E7429;position:absolute}
+.plate .b1{top:5px;left:5px}.plate .b2{top:5px;right:5px}
+.plate .b3{bottom:5px;left:5px}.plate .b4{bottom:5px;right:5px}
